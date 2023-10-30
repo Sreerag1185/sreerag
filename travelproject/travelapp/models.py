@@ -7,6 +7,9 @@ class travel(models.Model):
     img = models.ImageField(upload_to='pics')
     desc = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class travel_end(models.Model):
     name = models.CharField(max_length=250)
