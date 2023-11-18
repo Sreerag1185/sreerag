@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+
+    <script>
+function showForm() {
+  var form = document.getElementById("myForm");
+  form.style.display = "block";
+}
+
+function populateCourses() {
+  var departmentSelect = document.getElementById("department");
+  var courseSelect = document.getElementById("course");
+  courseSelect.innerHTML = "";
+
+  // Simulated data, replace with actual data from your Django models
+  var departmentCourses = {
+    commerce: ["BBA", "BCom"],
+    science: ["BSc", "MSc"],
+    // Add other departments and corresponding courses as needed
+  };
+
+  var selectedDepartment = departmentSelect.value;
+  var courses = departmentCourses[selectedDepartment];
+
+  courses.forEach(function (course) {
+    var option = document.createElement("option");
+    option.value = course;
+    option.text = course;
+    courseSelect.add(option);
+  });
+}
+   function handleFormSubmit() {
+    // Mocking a successful order confirmation
+    alert("Order Confirmed!");
+
+    // Display the confirmation message
+    document.getElementById('confirmation-message').style.display = 'block';
+  }
+
+  function navigateToHomePage() {
+    // Mocking a function to navigate to the home page
+    alert("Returning to Home Page");
+    // You can replace the alert with actual navigation logic
+    // For example, window.location.href = '/';
+  }
+</script>
+
+<style>
+/* Add your styles here */
+form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333333;
+}
+
+input,
+select,
+textarea {
+    width: calc(100% - 16px);
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+select {
+    width: 100%;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+#materials-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+#materials-container label {
+    flex: 0 0 48%;
+    margin-right: 4%;
+}
+
+#confirmation-message {
+    display: none;
+    margin-top: 16px;
+    font-size: 18px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+#return-link {
+    display: none;
+    margin-top: 16px;
+    font-size: 16px;
+    color: #3498db;
+}
+
+    </style>
+
+</head>
+<body>
+    <form id="myForm" method="post" >
+      {% csrf_token %}
+      <!-- Your form fields go here -->
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required><br>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required><br>
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select><br>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required><br>
+
+      <label for="email">Mail ID:</label>
+      <input type="email" id="email" name="email" required><br>
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" required></textarea><br>
+
+      <label for="department">Department:</label>
+      <select id="department" name="department" onchange="populateCourses()" required>
+        <option value="commerce">Commerce</option>
+        <option value="science">Science</option>
+        <!-- Add other departments as needed -->
+      </select><br>
+
+      <label for="course">Courses:</label>
+      <select id="course" name="course" required>
+        <!-- Courses will be populated dynamically using JavaScript -->
+      </select><br>
+
+      <label for="purpose">Purpose:</label>
+      <select id="purpose" name="purpose" required>
+        <option value="enquiry">Enquiry</option>
+        <option value="place_order">Place Order</option>
+        <option value="return">Return</option>
+        <!-- Add other purposes as needed -->
+      </select><br>
+
+
+       <label>Materials provide:</label>
+      <div id="materials-container">
+        <input type="checkbox" id="notebook" name="materials" value="notebook">
+        <label for="notebook">Notebook</label>
+
+        <input type="checkbox" id="pen" name="materials" value="pen">
+        <label for="pen">Pen</label>
+
+          <input type="checkbox" id="pencil" name="materials" value="pencil">
+        <label for="pencil">Pencil</label>
+
+          <input type="checkbox" id="eraser" name="materials" value="eraser">
+        <label for="eraser">Eraser</label>
+
+          <input type="checkbox" id="paper" name="materials" value="paper">
+        <label for="paper">Exam Papers</label>
+
+
+        <!-- Add other materials checkboxes as needed -->
+      </div><br>
+
+      <button type="submit">Submit</button>
+      <button type="button" onclick="window.location.href='{% url 'credentials:login' %}'">Logout</button>
+
+      {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                <h1>{{ message }}</h1>
+            </div>
+        {% endfor %}
+        <a href="{% url 'demo' %}">Return to Home Page</a>
+    {% endif %}
+    </form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<style>
+  /* Different style for the button */
+  button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    border: 2px solid #2980b9;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    margin: 50px;
+}
+
+h1 {
+    color: #0066cc;
+    font-size: 24px;
+}
+
+
+</style>
+<h1>Hello {{user.username}}</h1>
+<!-- Button to show the form -->
+<button onclick="window.location.href='{% url 'credentials:show_form' %}'">Show Form</button>
